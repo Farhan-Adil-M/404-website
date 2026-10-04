@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "targets": {
+    "/": {
+      "targetKind": "existing-ui",
+      "projectId": "51c65288-f78c-4586-8cc1-9b716a46cd0f",
+      "baselineDraftId": "f52538f2-1fcd-48b7-a55b-cf1e0b645065",
+      "activeDraftId": "9749d150-064a-4527-a91c-8132578f3784",
+      "designSystemPath": ".superdesign/design-system.md",
+      "referenceIds": [],
+      "contextFiles": [
+        ".superdesign/design-system.md",
+        ".superdesign/init/theme.md",
+        ".superdesign/tmp/render-context.md"
+      ],
+      "fingerprints": {
+        ".superdesign/design-system.md": "5a007a8d503565f1f1a36596e83953b3c985f366044a0a261bb6c856ebb3b38a",
+        ".superdesign/init/theme.md": "bd5ab1dc625ce7bb7c02f59fd198c1a42cfe4f1f9b08e3ef5dd074198e80241a",
+        ".superdesign/tmp/render-context.md": "1e2cc62a71f108f1c030faaed99b9342ba89b5667e89573975ba132e1f01cf34"
+      },
+      "components": [
+        {
+          "name": "Hud",
+          "id": "ed95730b-5e68-4626-84bc-f72e4bf8c67f",
+          "sourcePath": "src/components/Hud.tsx"
+        }
+      ],
+      "drafts": {
+        "f52538f2-1fcd-48b7-a55b-cf1e0b645065": {
+          "title": "TEAM 404 Classified Portfolio",
+          "visualDirection": "pixel-perfect reproduction baseline",
+          "parentDraftId": null,
+          "currentVersion": 1
+        },
+        "9749d150-064a-4527-a91c-8132578f3784": {
+          "title": "TEAM 404 — CINEMATIC DOCUMENT ARCHIVE",
+          "visualDirection": "forensic document investigation: registration marks, stamps, measurement lines, ruled structures, schematic node links",
+          "parentDraftId": "f52538f2-1fcd-48b7-a55b-cf1e0b645065",
+          "currentVersion": 1
+        },
+        "305fa7dc-9199-4fc1-a58f-d2f8dfa5dd79": {
+          "title": "TEAM 404 — Forensic Dossier System",
+          "visualDirection": "cinematic title-sequence editorial: dimensional typography, counter-motion, chapter-seam continuity",
+          "parentDraftId": "f52538f2-1fcd-48b7-a55b-cf1e0b645065",
+          "currentVersion": 1
+        }
+      },
+      "updatedAt": "2026-10-04T11:30:00Z"
+    }
+  }
+}

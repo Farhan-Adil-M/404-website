@@ -1,0 +1,1151 @@
+/* ============================================================
+   TEAM 404 — CHAPTERS 02–07
+   One continuous system; chapters are states, not sections.
+   ============================================================ */
+
+.ch {
+  position: relative;
+}
+
+.ch-label {
+  position: absolute;
+  top: calc(var(--margin) * 0.5);
+  left: var(--margin);
+  color: var(--mute);
+  z-index: 5;
+}
+.ch-label--dark {
+  color: rgba(234, 228, 216, 0.5);
+}
+/* desktop: the persistent HUD brand occupies the top-left corner lane, so
+   chapter labels stack directly beneath it instead of colliding */
+@media (min-width: 761px) {
+  .ch-label {
+    top: calc(var(--margin) * 0.5 + 44px);
+  }
+}
+
+/* the hand-off: identity overlaps the tail of the opening's pin spacer */
+.ch-identity {
+  margin-top: -16vh;
+  padding: 26vh var(--margin) 22vh;
+  overflow: hidden;
+}
+
+.ci-ghost {
+  position: absolute;
+  right: calc(var(--margin) * 0.4);
+  top: 4vh;
+  font-size: clamp(160px, 26vw, 420px);
+  line-height: 0.8;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--line-soft);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.ci-registry {
+  display: grid;
+  gap: 6px;
+  max-width: 420px;
+  margin: 0 0 16vh;
+  color: var(--ink-soft);
+}
+.ci-row {
+  overflow: hidden;
+}
+.ci-row > span {
+  display: inline-block;
+  will-change: transform;
+}
+
+.ci-display {
+  display: grid;
+  gap: 1.5vh;
+}
+.ci-line {
+  display: block;
+}
+.ci-big {
+  display: inline-block;
+  font-size: clamp(72px, 14vw, 230px);
+  will-change: transform;
+}
+.ci-outline {
+  color: transparent;
+  -webkit-text-stroke: 2px var(--ink);
+}
+
+.ci-serif {
+  max-width: 46ch;
+  margin-top: 7vh;
+  font-size: clamp(18px, 1.9vw, 28px);
+  line-height: 1.45;
+  color: var(--ink);
+}
+.ci-meta {
+  margin-top: 8vh;
+  color: var(--mute);
+}
+
+/* ---------- CH.03 / NODES ---------- */
+
+.ch-nodes {
+  padding: 10vh 0 0;
+}
+.cn-stage {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.cn-index {
+  position: absolute;
+  left: var(--margin);
+  top: 50%;
+  transform: translateY(-50%);
+  display: grid;
+  gap: 16px;
+  z-index: 5;
+}
+.cn-idx {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9em;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--mute);
+  transition: color 0.35s var(--ease-ui);
+}
+.cn-idx i {
+  display: block;
+  width: 16px;
+  height: 1px;
+  background: var(--line);
+  transition: background 0.35s var(--ease-ui), width 0.35s var(--ease-ui);
+}
+.cn-idx.is-active {
+  color: var(--ink);
+}
+.cn-idx.is-active i {
+  background: var(--accent);
+  width: 26px;
+}
+
+.cn-focus {
+  position: relative;
+  min-height: 100vh;
+}
+.cn-node {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 4vw;
+  padding: 0 calc(var(--margin) + 10vw) 0 calc(var(--margin) + 14vw);
+}
+.cn-num {
+  position: relative;
+  font-size: clamp(180px, 30vw, 470px);
+  line-height: 0.8;
+  color: transparent;
+  -webkit-text-stroke: 2px var(--ink);
+  opacity: 0.9;
+  will-change: transform;
+}
+.cn-num::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1.18em;
+  height: 1.18em;
+  border: 1px solid rgba(23, 21, 15, 0.16);
+  border-radius: 50%;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.94);
+  pointer-events: none;
+}
+.cn-node.is-scanned .cn-num::after {
+  animation: node-acquire 1.8s var(--ease-ui) infinite;
+}
+@keyframes node-acquire {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.94); }
+  18% { opacity: 0.42; }
+  100% { opacity: 0; transform: translate(-50%, -50%) scale(1.06); }
+}
+.cn-data {
+  display: grid;
+  gap: 3vh;
+}
+.cn-name {
+  font-size: clamp(34px, 5.4vw, 96px);
+  line-height: 0.9;
+}
+.cn-fields {
+  display: grid;
+  gap: 9px;
+}
+.cnf {
+  display: flex;
+  gap: 2em;
+  overflow: hidden;
+}
+.cnf > span {
+  display: inline-block;
+  will-change: transform;
+}
+.cnf-k {
+  color: var(--mute);
+  min-width: 6ch;
+}
+.cnf-v {
+  color: var(--ink);
+}
+.cn-note {
+  font-size: clamp(15px, 1.3vw, 20px);
+  color: var(--ink-soft);
+  max-width: 40ch;
+}
+.cn-hint {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: calc(var(--margin) * 0.55);
+  color: var(--mute);
+  white-space: nowrap;
+}
+
+@media (max-width: 760px) {
+  .ch-identity {
+    margin-top: 0;
+    padding-top: 18vh;
+  }
+  .ci-ghost {
+    font-size: 42vw;
+    opacity: 0.35;
+  }
+  .cn-stage {
+    min-height: 0;
+  }
+  .cn-index {
+    position: static;
+    transform: none;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    grid-auto-flow: row;
+    justify-content: stretch;
+    gap: 4px;
+    padding: 6vh var(--margin) 4vh;
+  }
+  .cn-idx {
+    min-width: 0;
+    justify-content: center;
+    gap: 3px;
+    font-size: 8px;
+    letter-spacing: 0.06em;
+  }
+  .cn-idx i {
+    width: 8px;
+    flex: none;
+  }
+  .cn-focus {
+    min-height: 0;
+    display: grid;
+    gap: 10vh;
+    padding: 0 var(--margin) 16vh;
+  }
+  .cn-node {
+    position: static;
+    grid-template-columns: 1fr;
+    gap: 3vh;
+    padding: 0;
+    opacity: 1;
+    visibility: visible;
+  }
+  .cn-num {
+    font-size: 34vw;
+    -webkit-text-stroke-width: 1.5px;
+  }
+  .cn-hint {
+    position: static;
+    transform: none;
+    text-align: center;
+    padding-bottom: 8vh;
+  }
+}
+
+/* ---------- CH.04 / EVIDENCE (the one horizontal passage) ---------- */
+
+.ch-evidence {
+  background: var(--ink);
+  color: var(--paper-hi, #f0ece3);
+}
+.ce-pin {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+.ce-track {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: max-content;
+  gap: 9vw;
+  padding: 0 var(--margin);
+  will-change: transform;
+}
+
+.ce-slab {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 4.5vw;
+  align-items: center;
+  width: 74vw;
+  flex: none;
+}
+.ce-slab:nth-of-type(2) {
+  width: 60vw;
+}
+.ce-slab:nth-of-type(3) {
+  width: 66vw;
+}
+
+/* the "scan": a paper evidence sheet held on the ink table */
+.ce-visual {
+  position: relative;
+  height: 56vh;
+  background: var(--paper);
+  overflow: hidden;
+  will-change: transform;
+  clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 0 100%);
+  box-shadow: 0 14px 30px rgba(23, 21, 15, 0.16), 1px 1px 0 var(--paper-2);
+  background-image:
+    radial-gradient(circle at 14px 18px, rgba(23, 21, 15, 0.24) 0 4px, transparent 4.8px),
+    radial-gradient(circle at 14px calc(100% - 18px), rgba(23, 21, 15, 0.24) 0 4px, transparent 4.8px);
+  filter: drop-shadow(0 10px 16px rgba(23, 21, 15, 0.12));
+}
+.ce-slab--alt .ce-visual {
+  background: transparent;
+  border: 1px solid rgba(234, 228, 216, 0.35);
+  box-shadow: none;
+  filter: none;
+}
+.ce-slab--alt { scale: 0.975; }
+.ce-ref {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: clamp(56px, 7.4vw, 130px);
+  color: transparent;
+  -webkit-text-stroke: 2px var(--ink);
+  white-space: nowrap;
+  z-index: 2;
+}
+.ce-slab--alt .ce-ref {
+  -webkit-text-stroke-color: rgba(234, 228, 216, 0.8);
+}
+.ce-stamp {
+  position: absolute;
+  left: 18px;
+  bottom: 14px;
+  color: var(--ink-soft);
+  z-index: 2;
+}
+.ce-slab--alt .ce-stamp {
+  color: rgba(234, 228, 216, 0.55);
+}
+/* print texture on the sheet — halftone edge, not decoration */
+.ce-visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: radial-gradient(
+    circle at center,
+    rgba(23, 21, 15, 0.22) 0.8px,
+    transparent 1.1px
+  );
+  background-size: 6px 6px;
+  opacity: 0.24;
+  z-index: 1;
+}
+.ce-slab--alt .ce-visual::after {
+  opacity: 0.12;
+}
+.ce-scan { mix-blend-mode: screen; }
+
+.ce-kicker {
+  color: rgba(234, 228, 216, 0.55);
+  margin-bottom: 2.2vh;
+}
+.ce-title {
+  font-size: clamp(44px, 6.4vw, 116px);
+  line-height: 0.85;
+  /* real titles must wrap: the global .display voice sets nowrap for
+     wordmarks/numerals, which pushed long titles past the slab */
+  white-space: normal;
+}
+.ce-desc {
+  margin-top: 3.4vh;
+  font-size: clamp(16px, 1.4vw, 22px);
+  line-height: 1.5;
+  color: rgba(234, 228, 216, 0.78);
+  max-width: 42ch;
+}
+.ce-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.4em;
+  margin-top: 3.6vh;
+  list-style: none;
+  color: rgba(234, 228, 216, 0.6);
+}
+.ce-meta {
+  margin-top: 2.6vh;
+  color: rgba(234, 228, 216, 0.5);
+}
+
+.ce-endcap {
+  width: 44vw;
+  flex: none;
+  display: grid;
+  place-items: center;
+}
+.ce-endcap span {
+  color: rgba(234, 228, 216, 0.55);
+}
+
+@media (max-width: 760px) {
+  .ce-pin {
+    height: auto;
+    padding: 14vh 0 12vh;
+  }
+  .ce-track {
+    flex-direction: column;
+    align-items: stretch;
+    width: auto;
+    height: auto;
+    gap: 14vh;
+    padding: 0 var(--margin);
+  }
+  .ce-slab,
+  .ce-slab:nth-of-type(2),
+  .ce-slab:nth-of-type(3) {
+    width: 100%;
+    grid-template-columns: 1fr;
+    gap: 4vh;
+  }
+  .ce-visual {
+    height: 38vh;
+  }
+  .ce-endcap {
+    width: 100%;
+    padding: 6vh 0;
+  }
+}
+
+/* ---------- CH.05 / ARCHIVE ---------- */
+
+.ch-archive {
+  padding: 26vh var(--margin) 24vh;
+  overflow: hidden;
+}
+.ca-spine {
+  position: absolute;
+  left: 50%;
+  top: 8vh;
+  bottom: 8vh;
+  width: 1px;
+  background: transparent;
+  will-change: transform;
+}
+.ca-list {
+  display: grid;
+  gap: 20vh;
+  padding: 12vh 0 6vh;
+}
+.ca-entry {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5vw;
+  align-items: center;
+}
+.ca-entry::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  transform: translate(-50%, -50%) rotate(45deg);
+  z-index: 1;
+}
+.ca-num {
+  font-size: clamp(110px, 17vw, 280px);
+  line-height: 0.8;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--ink);
+  will-change: transform;
+}
+.ca-entry--right .ca-num {
+  order: 2;
+  text-align: right;
+}
+.ca-entry--right .ca-body {
+  order: 1;
+  justify-items: end;
+  text-align: right;
+}
+.ca-body {
+  display: grid;
+  gap: 1.6vh;
+}
+.ca-mask {
+  display: block;
+  overflow: hidden;
+}
+.ca-reveal {
+  display: inline-block;
+  will-change: transform;
+}
+.ca-ref {
+  color: var(--mute);
+}
+.ca-event {
+  font-size: clamp(30px, 4.4vw, 76px);
+  line-height: 0.95;
+}
+.ca-meta {
+  color: var(--ink-soft);
+}
+.ca-meta::after {
+  content: "  /  FILED";
+  color: var(--mute);
+  white-space: nowrap;
+}
+.ca-note {
+  font-size: clamp(15px, 1.3vw, 19px);
+  color: var(--ink-soft);
+  max-width: 38ch;
+}
+.ca-entry--right .ca-note {
+  margin-left: auto;
+}
+
+@media (max-width: 760px) {
+  .ca-entry {
+    grid-template-columns: 1fr;
+    gap: 3vh;
+  }
+  .ca-num {
+    font-size: 30vw;
+  }
+  .ca-entry--right .ca-num {
+    order: 0;
+    text-align: left;
+  }
+  .ca-entry--right .ca-body {
+    justify-items: start;
+    text-align: left;
+  }
+  .ca-entry--right .ca-note {
+    margin-left: 0;
+  }
+  .ca-entry::before {
+    left: calc(var(--margin) * -0.5);
+  }
+  .ca-spine {
+    left: calc(var(--margin) * 0.5);
+  }
+}
+
+/* ---------- CH.06 / QUIET ---------- */
+
+.ch-quiet {
+  min-height: 175vh;
+  background: var(--ink);
+  color: var(--paper-hi, #f0ece3);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+.cq-ghost {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 55vw;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(234, 228, 216, 0.12);
+  opacity: 0.38;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+.cq-inner {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 0 8vw;
+}
+.cq-label {
+  color: rgba(234, 228, 216, 0.4);
+  display: block;
+  margin-bottom: 6vh;
+}
+.cq-line {
+  font-size: clamp(26px, 3.2vw, 52px);
+  line-height: 1.35;
+  will-change: transform, opacity;
+}
+.cq-rule {
+  width: 1px;
+  height: 12vh;
+  margin: 8vh auto 0;
+  background: rgba(234, 228, 216, 0.4);
+  transform: scaleY(0);
+  transform-origin: top center;
+}
+.cq-status {
+  margin-top: 5vh;
+  color: rgba(234, 228, 216, 0.3);
+  font-size: 8px;
+  letter-spacing: 0.2em;
+}
+
+/* ---------- CH.07 / FINALE ---------- */
+
+.ch-finale {
+  background: var(--paper);
+}
+.cf-stage {
+  position: relative;
+  min-height: 100vh;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 5vh;
+  padding: 22vh var(--margin) 18vh;
+  overflow: hidden;
+}
+
+.cf-ladder {
+  display: flex;
+  gap: 2.6em;
+  flex-wrap: wrap;
+  justify-content: center;
+  color: var(--ink-soft);
+}
+.cf-step {
+  display: inline-block;
+  overflow: hidden;
+}
+.cf-step-in {
+  display: inline-block;
+  font-style: normal;
+  will-change: transform;
+}
+
+.cf-crew {
+  display: flex;
+  gap: 3.2em;
+  flex-wrap: wrap;
+  justify-content: center;
+  color: var(--mute);
+}
+.cf-node {
+  will-change: transform;
+}
+
+.cf-mark {
+  display: flex;
+  align-items: baseline;
+  gap: 1.6vw;
+  font-size: clamp(76px, 14.4vw, 300px);
+  line-height: 0.8;
+}
+.cf-c {
+  display: inline-block;
+  overflow: hidden;
+}
+.cf-c-in {
+  display: inline-block;
+  font-style: normal;
+  will-change: transform;
+}
+.cf-gap {
+  display: inline-block;
+  width: 2.4vw;
+}
+.cf-d {
+  display: inline-block;
+  will-change: transform;
+}
+.cf-slot {
+  position: relative;
+  display: inline-block;
+}
+.cf-hollow {
+  color: transparent;
+  -webkit-text-stroke: 0.016em var(--ink);
+}
+.cf-solid {
+  position: absolute;
+  inset: 0;
+  color: var(--ink);
+  will-change: opacity;
+}
+
+/* the one full-strength accent moment of the entire site */
+.cf-rule {
+  width: min(62vw, 900px);
+  height: 3px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: center;
+  will-change: transform;
+}
+
+.cf-thesis {
+  font-size: clamp(20px, 2.3vw, 36px);
+  line-height: 1.4;
+  text-align: center;
+  will-change: transform, opacity;
+}
+
+.cf-sig {
+  display: flex;
+  gap: 3em;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-top: 6vh;
+  color: var(--mute);
+  will-change: transform, opacity;
+}
+.cf-again {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  border: 1px solid var(--ink);
+  padding: 13px 30px 11px;
+  color: var(--ink);
+  background: transparent;
+  transition: background 0.35s var(--ease-ui), color 0.35s var(--ease-ui);
+}
+.cf-again:hover,
+.cf-again:focus-visible {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+@media (max-width: 760px) {
+  .cf-stage {
+    padding-top: 18vh;
+    gap: 4vh;
+  }
+  .cf-mark {
+    font-size: 17vw;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .cf-gap {
+    width: 4vw;
+  }
+}
+
+/* reduced motion / mobile static finale: everything resolved */
+.ch-finale.is-static .cf-c-in,
+.ch-finale.is-static .cf-step-in {
+  transform: none;
+}
+.ch-finale.is-static .cf-solid {
+  opacity: 1;
+}
+.ch-finale.is-static .cf-rule {
+  transform: scaleX(1);
+}
+.ch-finale.is-static .cf-thesis,
+.ch-finale.is-static .cf-sig {
+  opacity: 1;
+  transform: none;
+}
+.ch-finale.is-static .cf-node {
+  opacity: 1;
+  transform: none;
+}
+
+/* CH.04 — evidence sheets carry their own forensic micro-refs */
+.ce-visual::before {
+  content: "";
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  pointer-events: none;
+}
+.ce-slab:nth-of-type(1) .ce-visual::before { content: "REF_ID / 0404-001"; }
+.ce-slab:nth-of-type(2) .ce-visual::before { content: "REF_ID / 0404-002"; }
+.ce-slab:nth-of-type(3) .ce-visual::before { content: "REF_ID / 0404-003"; }
+.ce-slab--alt .ce-visual::before { color: rgba(234, 228, 216, 0.55); }
+.ce-visual::before { z-index: 2; }
+
+/* Identity's six member index sits above the record ledger, mapping 06 to
+   six real roster ids without fabricating any personal metadata. */
+.six-points {
+  display: block;
+  flex: none;
+  flex-direction: initial;
+  justify-content: initial;
+  left: var(--margin);
+  top: 11vh;
+  width: min(44vw, 480px);
+  height: auto;
+}
+.six-points__label {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--mute);
+  font-size: 8px;
+}
+.six-points__row {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+}
+.six-points__row::before {
+  content: "";
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  top: 2px;
+  height: 1px;
+  background: var(--line-soft);
+}
+.six-points i {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  font-style: normal;
+}
+.six-points i::before {
+  background: var(--paper);
+}
+
+@media (max-width: 760px) {
+  .cq-ghost {
+    font-size: 92vw;
+    right: 0;
+    opacity: 0.2;
+  }
+  .six-points {
+    width: calc(100vw - 2 * var(--margin));
+    display: block;
+  }
+  .six-points i b {
+    font-size: 7px;
+    letter-spacing: 0.06em;
+  }
+  .ce-visual {
+    filter: none;
+  }
+}
+
+/* Identity ledger is ruled at the row rhythm, with a discreet open edge. */
+.ci-registry {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 25px,
+    rgba(23, 21, 15, 0.035) 25px,
+    rgba(23, 21, 15, 0.035) 26px
+  );
+}
+
+/* Six investigation nodes map one-to-one to schematic acquisition ticks. */
+.ch-nodes .cn-schematic i:nth-child(1) { left: 0; }
+.ch-nodes .cn-schematic i:nth-child(2) { left: 20%; }
+.ch-nodes .cn-schematic i:nth-child(3) { left: 40%; }
+.ch-nodes .cn-schematic i:nth-child(4) { left: 60%; }
+.ch-nodes .cn-schematic i:nth-child(5) { left: 80%; }
+.ch-nodes .cn-schematic i:nth-child(6) { right: 0; }
+.ch-nodes .cn-schematic i.is-active {
+  top: -7px;
+  height: 15px;
+  background: var(--accent);
+}
+.ch-nodes .cn-schematic { z-index: 2; opacity: 0.65; }
+.cn-scan { z-index: 2; }
+
+/* ---------- reduced-motion polish ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .cn-node.is-scanned .cn-num::after { animation: none; opacity: 0.28; transform: translate(-50%, -50%) scale(1); }
+}
+
+/* ---------- forensic enrichment (static, desktop) ---------- */
+
+/* CH.02 — classified personnel record: ruled ledger behind the registry,
+   record counters, and a left registration rule */
+.ch-identity .ci-registry {
+  counter-reset: rec;
+}
+.ch-identity .ci-row > span::before {
+  counter-increment: rec;
+  content: "RECORD / 00" counter(rec) "  ";
+  color: var(--mute);
+}
+.ch-identity .ci-registry::before {
+  content: "";
+  position: absolute;
+  left: -16px;
+  top: 4px;
+  bottom: 4px;
+  width: 1px;
+  background: var(--line-soft);
+}
+.ch-identity .ci-registry {
+  position: relative;
+}
+.ch-identity .ci-registry::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: -16px;
+  right: -24px;
+  top: -8px;
+  bottom: -8px;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 26px,
+    var(--line-soft) 26px,
+    var(--line-soft) 27px
+  );
+}
+
+/* CH.03 — investigation schematic: hairline schematic links from the
+   member index into the record, and a trace readout */
+.ch-nodes .cn-schematic {
+  position: absolute;
+  left: calc(var(--margin) + 34px);
+  right: calc(var(--margin) * 6);
+  top: 50%;
+  height: 1px;
+  pointer-events: none;
+  background-image: linear-gradient(var(--line-soft), var(--line-soft));
+  background-size: 100% 1px;
+  background-position: left center;
+}
+.ch-nodes .cn-schematic i {
+  position: absolute;
+  top: -4px;
+  width: 1px;
+  height: 9px;
+  background: var(--line-soft);
+}
+/* CH.05 — case archive: shelf ticks on the spine (inherit the spine's
+   own scrub-grown transform), and a record seal at the log header */
+.ca-spine {
+  overflow: hidden;
+}
+.ca-spine::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    var(--line-soft) 0,
+    var(--line-soft) 8px,
+    transparent 8px,
+    transparent 40px
+  );
+}
+.ch-archive .doc-tag {
+  right: calc(var(--margin) * 1.6);
+  top: calc(var(--margin) * 0.5 + 40px);
+}
+
+/* CH.07 — resolution payoff: registration crosses flanking the wordmark */
+.ch-finale .cf-mark {
+  position: relative;
+}
+.ch-finale .cf-mark::before,
+.ch-finale .cf-mark::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 11px;
+  height: 11px;
+  pointer-events: none;
+  background-image: linear-gradient(var(--line), var(--line)),
+    linear-gradient(var(--line), var(--line));
+  background-size: 11px 1px, 1px 11px;
+  background-position: center, center;
+  background-repeat: no-repeat;
+}
+.ch-finale .cf-mark::before { left: -6vw; }
+.ch-finale .cf-mark::after { right: -6vw; }
+
+/* forensic layer collapses on mobile stacks */
+@media (max-width: 760px) {
+  .docframe,
+  .doc-tag,
+  .doc-scale,
+  .doc-note,
+  .six-points,
+  .cn-schematic,
+  .cn-scan,
+  .ce-scan,
+  .ce-visual::before,
+  .ch-finale .cf-mark::before,
+  .ch-finale .cf-mark::after {
+    display: none;
+  }
+}
+
+/* dark-world registration chrome flips with the chrome tone */
+html.tone-dark {
+  --frame-stroke: rgba(234, 228, 216, 0.35);
+}
+
+/* ---------- tone inversion (chrome only) ---------- */
+
+html.tone-dark .hud__dim {
+  color: rgba(234, 228, 216, 0.5);
+}
+html.tone-dark .hud__brand {
+  color: rgba(234, 228, 216, 0.9);
+}
+html.tone-dark .hud__anomaly {
+  color: rgba(234, 228, 216, 0.7);
+}
+html.tone-dark .rail::before,
+html.tone-dark .rail__line::before {
+  background: rgba(234, 228, 216, 0.22);
+}
+html.tone-dark .rail__fill {
+  background: rgba(234, 228, 216, 0.9);
+}
+html.tone-dark .rail__tick i {
+  background: rgba(234, 228, 216, 0.4);
+}
+html.tone-dark .rail__tick.is-active i,
+html.tone-dark .rail__tick:hover i {
+  background: rgba(234, 228, 216, 0.9);
+}
+html.tone-dark .cursor__dot {
+  background: #eae4d8;
+}
+html.tone-dark .cursor__label {
+  color: var(--ink);
+}
+html.tone-dark .grain {
+  mix-blend-mode: screen;
+  opacity: 0.09;
+}
+html.tone-dark ::selection {
+  background: #eae4d8;
+  color: var(--ink);
+}
+
+/* ---------- rail as system navigation ---------- */
+
+.rail__line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: var(--line-soft);
+}
+.rail__fill {
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+.rail__tick {
+  position: absolute;
+  bottom: -7px;
+  transform: translateX(-50%);
+  width: 18px;
+  height: 26px;
+  padding: 0;
+  pointer-events: auto;
+}
+.rail__tick i {
+  display: block;
+  width: 1px;
+  height: 6px;
+  margin: 12px auto 0;
+  background: var(--line);
+  transition: background 0.3s var(--ease-ui), height 0.3s var(--ease-ui);
+}
+.rail__tick:first-of-type i,
+.rail__tick:last-of-type i {
+  height: 10px;
+  margin-top: 8px;
+}
+.rail__tick::after {
+  content: attr(data-label);
+  position: absolute;
+  /* tucked just under the line it annotates: the band above the rail is
+     occupied by the HUD corner blocks at the margins */
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.14em;
+  color: var(--mute);
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s var(--ease-ui);
+  pointer-events: none;
+}
+.rail__tick.is-active i {
+  height: 10px;
+  background: var(--ink);
+}
+.rail__tick.is-active::after {
+  opacity: 1;
+  color: var(--ink);
+}
+.rail__tick:hover i {
+  height: 10px;
+  background: var(--ink);
+}
+.rail__tick:hover::after {
+  opacity: 1;
+}
+.rail__tick:focus-visible {
+  outline: 1px solid var(--ink);
+  outline-offset: 2px;
+}
+@media (min-width: 1100px) {
+  .rail__tick::after {
+    opacity: 0.55;
+  }
+  html.tone-dark .rail__tick::after {
+    color: rgba(234, 228, 216, 0.45);
+  }
+  html.tone-dark .rail__tick.is-active::after {
+    color: var(--paper);
+  }
+}

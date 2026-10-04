@@ -1,0 +1,877 @@
+/* ============================================================
+   TEAM 404 — GLOBAL DESIGN TOKENS & BASE
+   Palette: bone paper / near-black ink / one signal accent.
+   Accent is reserved for system events only (never decoration).
+   ============================================================ */
+
+:root {
+  --paper: #eae4d8;
+  --paper-2: #e0d9c9;
+  --paper-hi: #f0ece3;
+  --ink: #17150f;
+  --ink-soft: #4b4638;
+  --mute: #928b7a;
+  --line: rgba(23, 21, 15, 0.32);
+  --line-soft: rgba(23, 21, 15, 0.14);
+  --accent: #e8481f;
+
+  --margin: clamp(18px, 3.4vw, 56px);
+  --g: clamp(10px, 1.2vw, 20px);
+
+  --font-display: "Archivo Black", "Arial Black", "Segoe UI Black", sans-serif;
+  --font-serif: Georgia, "Times New Roman", serif;
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas,
+    monospace;
+
+  /* UI micro-interaction bezier (approved) */
+  --ease-ui: cubic-bezier(0.2, 0.7, 0.1, 1);
+
+  /* wordmark system — JS reveal constants must match these */
+  --wm-fs: 44vw;
+  --reveal-scale: 0.42;
+  --reveal-x: 20; /* xPercent of the 404 display at reveal */
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background: var(--paper);
+  scrollbar-width: none;
+}
+html::-webkit-scrollbar {
+  display: none;
+}
+
+html.locked,
+html.locked body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizelegibility;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 1px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.no-native-cursor,
+.no-native-cursor * {
+  cursor: none !important;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* ---------- type voices ---------- */
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  line-height: 0.8;
+  letter-spacing: -0.035em;
+  white-space: nowrap;
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  line-height: 1.5;
+}
+
+.serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+/* ---------- grain (one texture layer, whole site) ---------- */
+
+.grain {
+  position: fixed;
+  inset: -60%;
+  z-index: 40;
+  pointer-events: none;
+  opacity: 0.14;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.09  0 0 0 0 0.08  0 0 0 0 0.06  0 0 0 0.6 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  animation: grain-shift 0.9s steps(4) infinite;
+}
+
+@keyframes grain-shift {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(-2%, 1.4%);
+  }
+  50% {
+    transform: translate(1.6%, -2%);
+  }
+  75% {
+    transform: translate(-1.2%, -1%);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+/* ---------- HUD (persistent state layer) ---------- */
+
+.hud {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 1;
+  transition: opacity 0.6s var(--ease-ui);
+}
+.hud--hidden {
+  opacity: 0;
+}
+
+/* four separated corners — dense but precisely engineered */
+.hud__tl,
+.hud__tr {
+  position: absolute;
+  top: calc(var(--margin) * 0.5);
+}
+.hud__tl {
+  left: var(--margin);
+  display: grid;
+  gap: 3px;
+  justify-items: start;
+}
+.hud__tr {
+  right: var(--margin);
+  display: grid;
+  gap: 3px;
+  justify-items: end;
+  text-align: right;
+}
+.hud__bl,
+.hud__br {
+  position: absolute;
+  bottom: calc(var(--margin) * 0.55 + 22px);
+}
+.hud__bl {
+  left: var(--margin);
+  display: grid;
+  gap: 3px;
+  justify-items: start;
+}
+.hud__br {
+  right: var(--margin);
+  display: grid;
+  gap: 3px;
+  justify-items: end;
+  text-align: right;
+}
+
+.hud .mono,
+.hud__brand {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+.hud__dim {
+  color: var(--mute);
+}
+.hud__brand {
+  font-size: 10px;
+  color: var(--ink);
+}
+.hud__anomaly {
+  color: var(--ink-soft);
+}
+
+/* bottom progress rail — line, fill and tick buttons live in chapters.css */
+.rail {
+  position: absolute;
+  left: var(--margin);
+  right: var(--margin);
+  bottom: calc(var(--margin) * 0.55);
+  height: 14px;
+}
+
+/* ---------- custom cursor ---------- */
+
+.cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 100;
+  width: 44px;
+  height: 44px;
+  margin: -22px 0 0 -22px;
+  pointer-events: none;
+}
+.cursor__dot {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: var(--ink);
+  transform: scale(0.14);
+  transition: transform 0.45s var(--ease-ui), background-color 0.3s;
+}
+.cursor__label {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.14em;
+  color: var(--paper);
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+.cursor.is-active .cursor__dot {
+  transform: scale(1);
+}
+.cursor.is-active .cursor__label {
+  opacity: 1;
+}
+
+/* ---------- wordmark (shared: loader + threshold) ---------- */
+
+.wm {
+  display: block;
+}
+.wm__fit {
+  display: block;
+  position: relative;
+  font-size: var(--wm-fs);
+}
+.wm__display {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  font-family: var(--font-display);
+  font-size: inherit;
+  font-weight: 400;
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+}
+/* misregistration ghosts (misbehavior beat) */
+.wm__ghost {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  font-family: var(--font-display);
+  font-size: inherit;
+  font-weight: 400;
+  line-height: 0.8;
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--line);
+  opacity: 0;
+  pointer-events: none;
+}
+.g {
+  display: inline-block;
+  will-change: transform;
+}
+.g--slot .g__hollow {
+  color: transparent;
+  -webkit-text-stroke: 0.016em var(--slot-stroke, var(--ink));
+}
+.slot-rule {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.06em;
+  height: 1px;
+  background: var(--line);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+/* ---------- loader ---------- */
+
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: var(--paper);
+  overflow: hidden;
+}
+.loader__wm {
+  position: absolute;
+  left: 50%;
+  top: 46%;
+  transform: translate(-50%, -50%);
+  width: min(86vw, 1400px);
+}
+.loader__status {
+  position: absolute;
+  left: 50%;
+  bottom: 20vh;
+  transform: translateX(-50%);
+  display: grid;
+  gap: 4px;
+  text-align: left;
+  min-height: 5.4em;
+  color: var(--ink-soft);
+}
+.loader__status .is-live {
+  color: var(--ink);
+}
+.loader__corner {
+  position: absolute;
+  top: calc(var(--margin) * 0.55);
+  display: grid;
+  gap: 2px;
+  color: var(--ink-soft);
+}
+.loader__corner--l {
+  left: var(--margin);
+}
+.loader__corner--r {
+  right: var(--margin);
+  text-align: right;
+}
+.loader__skip {
+  position: absolute;
+  right: var(--margin);
+  bottom: calc(var(--margin) * 0.55);
+  color: var(--mute);
+  transition: color 0.3s var(--ease-ui);
+}
+.loader__skip:hover {
+  color: var(--ink);
+}
+
+.caret {
+  display: inline-block;
+  width: 0.52em;
+  height: 1em;
+  background: currentColor;
+  vertical-align: -0.12em;
+  margin-left: 0.08em;
+  animation: caret-blink 1s steps(2) infinite;
+}
+@keyframes caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* ---------- threshold scene ---------- */
+
+.threshold {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+.threshold__pin {
+  position: relative;
+  height: 100vh;
+}
+
+.threshold__head {
+  position: absolute;
+  /* scene-metadata lane: beneath the persistent HUD brand block, matching
+     the .ch-label offset — the HUD owns the top strip */
+  top: calc(var(--margin) * 0.55 + 44px);
+  left: var(--margin);
+  right: var(--margin);
+  display: flex;
+  justify-content: space-between;
+  gap: 1em;
+  color: var(--ink-soft);
+}
+
+.threshold__wm {
+  position: absolute;
+  left: 50%;
+  top: 42%;
+  transform: translate(-50%, -50%);
+  width: min(72vw, 1200px);
+}
+
+.threshold__titles {
+  position: absolute;
+  left: var(--margin);
+  right: var(--margin);
+  top: 65vh;
+  text-align: center;
+}
+.t-title {
+  display: flex;
+  justify-content: center;
+  gap: 0.4em;
+  font-family: var(--font-display);
+  font-size: clamp(26px, 4.6vw, 76px);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+.t-word {
+  display: inline-block;
+  position: relative;
+  will-change: transform;
+}
+/* strike-through: the system negating its own negation */
+.t-strike {
+  position: absolute;
+  left: -2%;
+  right: -2%;
+  top: 54%;
+  height: clamp(2px, 0.28vw, 4px);
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  pointer-events: none;
+}
+.t-title .t-word--ghost {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--ink);
+}
+.t-serif {
+  margin-top: 2.4vh;
+  min-height: 3.4em; /* reserves act B so the accent dot never jumps */
+  font-size: clamp(17px, 1.6vw, 24px);
+  line-height: 1.35;
+  color: var(--ink);
+  max-width: 52ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+.t-serif .caret {
+  height: 0.9em;
+  width: 0.4em;
+}
+
+.threshold__ident {
+  position: absolute;
+  left: var(--margin);
+  top: 12vh;
+  color: var(--ink-soft);
+  white-space: pre;
+}
+
+/* technical block — bottom-left corner lane, stacked rows.
+   Sits one approved lane above the persistent HUD coordinates block,
+   which owns the corner line at margin*0.55 + 22px. */
+.threshold__meta {
+  position: absolute;
+  left: var(--margin);
+  bottom: calc(var(--margin) * 0.55 + 44px);
+  display: grid;
+  gap: 3px;
+  justify-items: start;
+  text-align: left;
+  color: var(--ink-soft);
+}
+.meta-row {
+  overflow: hidden;
+}
+.meta-row > span {
+  display: inline-block;
+  transform: translateY(130%);
+  will-change: transform;
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+}
+
+/* cross rules (structural drawing) */
+.cross {
+  position: absolute;
+  background: var(--line);
+}
+.cross--v {
+  left: 50%;
+  top: 9vh;
+  width: 1px;
+  height: 30vh;
+  transform: scaleY(0);
+  transform-origin: top center;
+}
+.cross--h {
+  left: 24vw;
+  top: 62vh;
+  width: 22vw;
+  height: 1px;
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+.found-dot {
+  display: block;
+  width: 10px;
+  height: 10px;
+  margin: 16px auto 0;
+  border-radius: 50%;
+  background: var(--accent);
+  transform: scale(0);
+}
+
+/* system node registry — bottom-right corner lane, mirrors the meta block.
+   Two approved lanes above the rail: the persistent HUD pairs block owns
+   margin*0.55 + 22px upward (~2 lines); the registry stacks above it and is
+   horizontally clear of the centered thesis at every desktop width. */
+.node-reg {
+  position: absolute;
+  right: var(--margin);
+  bottom: calc(var(--margin) * 0.55 + 88px);
+  display: grid;
+  gap: 3px;
+  text-align: right;
+  color: var(--ink-soft);
+  pointer-events: none;
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+}
+.node-row {
+  display: flex;
+  gap: 2.2em;
+  justify-content: flex-end;
+}
+.node-row__state {
+  color: var(--mute);
+}
+
+/* ENTER — its own centered lane beneath the thesis, clear of corner metadata */
+.enter {
+  position: absolute;
+  left: 50%;
+  bottom: 7vh;
+  transform: translateX(-50%);
+  border: 1px solid var(--ink);
+  padding: 15px 42px 13px;
+  overflow: hidden;
+  z-index: 5;
+  transition: opacity 0.5s var(--ease-ui), border-color 0.4s var(--ease-ui);
+}
+.enter__fill {
+  position: absolute;
+  inset: 0;
+  background: var(--ink);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.5s var(--ease-ui);
+}
+.enter__txt {
+  position: relative;
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  transition: color 0.4s var(--ease-ui);
+}
+.enter__meta {
+  position: relative;
+  display: block;
+  margin-top: 3px;
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  color: var(--mute);
+  transition: color 0.4s var(--ease-ui);
+}
+.enter:hover .enter__fill,
+.enter.is-on .enter__fill {
+  transform: scaleX(1);
+}
+.enter:hover .enter__txt,
+.enter.is-on .enter__txt {
+  color: var(--paper);
+}
+.enter:hover .enter__meta,
+.enter.is-on .enter__meta {
+  color: rgba(234, 228, 216, 0.55);
+}
+.enter.is-on {
+  pointer-events: none;
+}
+.enter.is-done {
+  opacity: 0.22;
+}
+
+/* ghost TEAM glyphs (assembled at reveal) */
+.team {
+  position: absolute;
+  left: var(--margin);
+  top: 47%;
+  transform: translateY(-50%);
+  width: 42vw;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  pointer-events: none;
+  font-family: var(--font-display);
+  font-size: calc(var(--wm-fs) * 0.33);
+  line-height: 0.8;
+  letter-spacing: -0.03em;
+}
+.team .g {
+  opacity: 0;
+  will-change: transform;
+}
+
+/* static (reduced-motion) reveal state */
+.threshold.is-revealed .wm__display {
+  transform: translateX(calc(var(--reveal-x) * 1%)) scale(var(--reveal-scale));
+}
+.threshold.is-revealed .team .g {
+  opacity: 1;
+  transform: none;
+}
+.threshold.is-revealed .team {
+  left: 4vw;
+  font-size: calc(var(--wm-fs) * var(--reveal-scale));
+}
+.threshold.is-revealed .meta-row > span {
+  transform: none;
+}
+
+/* ---------- forensic document layer (static enrichment) ----------
+   Registration chrome that makes each chapter read as a document being
+   inspected. Pure CSS, static, desktop-only; hidden on mobile below. */
+
+/* four corner crop marks keyed off the page margin */
+.docframe {
+  position: absolute;
+  inset: calc(var(--margin) * 1.6);
+  pointer-events: none;
+  z-index: 2;
+  --frame-stroke: var(--line);
+  background-image: linear-gradient(var(--frame-stroke), var(--frame-stroke)),
+    linear-gradient(var(--frame-stroke), var(--frame-stroke)),
+    linear-gradient(var(--frame-stroke), var(--frame-stroke)),
+    linear-gradient(var(--frame-stroke), var(--frame-stroke)),
+    linear-gradient(var(--frame-stroke), var(--frame-stroke)),
+    linear-gradient(var(--frame-stroke), var(--frame-stroke)),
+    linear-gradient(var(--frame-stroke), var(--frame-stroke)),
+    linear-gradient(var(--frame-stroke), var(--frame-stroke));
+  background-position: top left, top left, top right, top right, bottom left,
+    bottom left, bottom right, bottom right;
+  background-size: 14px 1px, 1px 14px, 14px 1px, 1px 14px, 14px 1px, 1px 14px,
+    14px 1px, 1px 14px;
+  background-repeat: no-repeat;
+}
+
+/* classification stamp — hairline-bordered, slightly rotated */
+.doc-tag {
+  position: absolute;
+  pointer-events: none;
+  border: 1px solid var(--line);
+  padding: 5px 9px 4px;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--mute);
+  transform: rotate(6deg);
+}
+
+/* left-margin measurement ruler: hairline column with perpendicular ticks */
+.doc-scale {
+  position: absolute;
+  left: calc(var(--margin) * 0.62);
+  top: 15vh;
+  bottom: 15vh;
+  width: 7px;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 79px,
+    var(--line-soft) 79px,
+    var(--line-soft) 80px
+  );
+}
+
+/* micro technical readout */
+.doc-note {
+  position: absolute;
+  pointer-events: none;
+  font-family: var(--font-mono);
+  font-size: 8px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+  white-space: nowrap;
+}
+
+/* scan instruments — ink hairlines swept by the choreography */
+.threshold__scan {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 1px;
+  background: var(--line);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+.cn-scan {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  background: var(--line);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+.ce-scan {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  background: rgba(234, 228, 216, 0.5);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* six registration points — one per member (structural, not decorative) */
+.six-points {
+  position: absolute;
+  left: calc(var(--margin) * 2.1);
+  top: 28vh;
+  height: 42vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  pointer-events: none;
+}
+.six-points i {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.six-points i::before {
+  content: "";
+  width: 5px;
+  height: 5px;
+  border: 1px solid var(--line);
+}
+.six-points i b {
+  font-weight: 400;
+  font-size: 8px;
+  letter-spacing: 0.14em;
+  color: var(--mute);
+}
+
+/* ---------- responsive recomposition ---------- */
+
+@media (max-width: 760px) {
+  :root {
+    --wm-fs: 52vw;
+    --reveal-scale: 0.5;
+    --reveal-x: 12;
+  }
+  .threshold__head span:nth-child(3) {
+    display: none;
+  }
+  .threshold__wm {
+    width: 84vw;
+    top: 38%;
+  }
+  .cross--h {
+    top: 52vh;
+  }
+  .threshold__titles {
+    top: 55vh;
+  }
+  .threshold__ident {
+    left: var(--margin);
+    right: var(--margin);
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  /* mobile: corner metadata collapses to one centered block above ENTER */
+  .node-reg {
+    display: none;
+  }
+  .threshold__meta {
+    left: var(--margin);
+    right: var(--margin);
+    bottom: 13vh;
+    justify-items: center;
+    text-align: center;
+  }
+  .enter {
+    bottom: 4vh;
+  }
+  .hud__bl {
+    display: none;
+  }
+  .hud__br {
+    bottom: calc(var(--margin) * 0.55 + 18px);
+  }
+  .loader__wm {
+    width: 88vw;
+  }
+  /* forensic layer collapses to keep mobile stacks clean */
+  .docframe,
+  .doc-tag,
+  .doc-scale,
+  .doc-note,
+  .cn-scan,
+  .ce-scan,
+  .threshold__cross-ref {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grain {
+    animation: none;
+  }
+  .caret {
+    animation: none;
+  }
+  .cursor__dot,
+  .enter__fill {
+    transition: none;
+  }
+}
